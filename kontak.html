@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Syam Digital - Kontak Kami</title>
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/di8stbg60/image/upload/v1767425380/syam-digital-01_i5zfka.png">
     <style>
         * {
             box-sizing: border-box;
@@ -93,6 +94,48 @@
             cursor: not-allowed;
         }
 
+        /* Gaya untuk tombol tambahan */
+        .navigation-buttons {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-secondary, .btn-home {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Tombol Lihat Pesan (Spreadsheet) */
+        .btn-secondary {
+            background-color: #198754;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #157347;
+        }
+
+        /* Tombol Kembali ke Home */
+        .btn-home {
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #ccc;
+        }
+
+        .btn-home:hover {
+            background-color: #e2e6ea;
+            color: #000;
+        }
+
         #alert-msg {
             margin-top: 15px;
             padding: 10px;
@@ -139,10 +182,20 @@
         </form>
 
         <div id="alert-msg"></div>
+
+        <!-- Bagian Tombol Navigasi Tambahan -->
+        <div class="navigation-buttons">
+            <a href="https://docs.google.com/spreadsheets/d/1-mFU4G2Itqv_8Ywt_MAC2ViCfONBO-QDwbjFoI3z1fM/edit?usp=sharing" target="_blank" class="btn-secondary">
+                📊 Lihat Rekap Pesan (Spreadsheet)
+            </a>
+            <a href="https://www.syamstore.my.id/" class="btn-home">
+                🏠 Kembali ke Home
+            </a>
+        </div>
     </div>
 
     <script>
-        // Tempelkan URL Google Apps Script Anda di bawah ini
+        // Tempelkan Web App URL Google Apps Script Anda di sini
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwelIX-AnhQmOgLLr7NPbplC-8ExLES0KQiJjNsq97cvR3UTIgP5C1DDd60oyaQTEf3nA/exec';
         
         const form = document.forms['submit-to-google-sheet'];
