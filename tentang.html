@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang Kami - Syam Digital</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/di8stbg60/image/upload/v1767425380/syam-digital-01_i5zfka.png">
+
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 12px;
+        }
+
+        .logo-container img {
+            height: 45px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #0052D4;
+        }
+
+        .btn-home {
+            background-color: #0052D4;
+            color: #ffffff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-home:hover {
+            background-color: #003db3;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0052D4, #4364F7, #6FB1FC);
+            color: #fff;
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Section General */
+        section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: #111;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 50px;
+            height: 4px;
+            background-color: #0052D4;
+            display: block;
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* About Section (Grid) */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #0052D4;
+        }
+
+        .about-text p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        /* Visi & Misi Section */
+        .visi-misi {
+            background-color: #fff;
+        }
+
+        .visi-misi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            border-left: 5px solid #0052D4;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #111;
+        }
+
+        .card ul {
+            list-style-position: inside;
+            color: #555;
+        }
+
+        .card ul li {
+            margin-bottom: 10px;
+        }
+
+        /* Keunggulan Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+
+        .feature-box {
+            background: #fff;
+            padding: 30px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-box h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #0052D4;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #111;
+            color: #fff;
+            text-align: center;
+            padding: 25px 20px;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #6FB1FC;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .navbar .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="https://www.syamstore.my.id/" class="logo-container">
+                <img src="https://res.cloudinary.com/di8stbg60/image/upload/v1767425380/syam-digital-01_i5zfka.png" alt="Logo Syam Digital">
+                <span class="logo-text">Syam Digital</span>
+            </a>
+            <a href="https://www.syamstore.my.id/" class="btn-home">Kembali ke Home</a>
+        </div>
+    </nav>
+
+    <!-- Hero Header -->
+    <header class="hero">
+        <div class="container">
+            <h1>Tentang Syam Digital</h1>
+            <p>Mitra Terpercaya Solusi Digital dan Transformasi Bisnis Anda</p>
+        </div>
+    </header>
+
+    <!-- Sekilas Tentang Kami -->
+    <section>
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Mengenal Syam Digital</h2>
+                    <p><strong>Syam Digital</strong> adalah agensi layanan digital yang berdedikasi untuk membantu bisnis, UMKM, dan profesional berkembang di era digital saat ini.</p>
+                    <p>Kami menyediakan berbagai layanan mulai dari pembuatan website, pengembangan aplikasi, pemasaran digital (digital marketing), hingga desain kreatif. Kami percaya bahwa setiap bisnis memiliki potensi besar jika didukung oleh teknologi yang tepat.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://res.cloudinary.com/di8stbg60/image/upload/v1767425380/syam-digital-01_i5zfka.png" alt="Logo Syam Digital">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visi dan Misi -->
+    <section class="visi-misi">
+        <div class="container">
+            <h2 class="section-title">Visi & Misi</h2>
+            <div class="visi-misi-grid">
+                <div class="card">
+                    <h3>Visi Kami</h3>
+                    <p>Menjadi penyedia layanan digital terdepan dan terpercaya yang membantu mengakselerasi pertumbuhan bisnis di Indonesia melalui solusi teknologi yang inovatif dan efisien.</p>
+                </div>
+                <div class="card">
+                    <h3>Misi Kami</h3>
+                    <ul>
+                        <li>Memberikan layanan teknologi terbaik dengan standar kualitas tinggi.</li>
+                        <li>Membantu klien mengoptimalkan strategi digital untuk mencapai target bisnis.</li>
+                        <li>Terus berinovasi mengikuti perkembangan teknologi terbaru.</li>
+                        <li>Memberikan edukasi dan pendampingan digital secara berkelanjutan.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mengapa Memilih Kami -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">Mengapa Memilih Syam Digital?</h2>
+            <div class="features">
+                <div class="feature-box">
+                    <h3>Profesional & Pengalaman</h3>
+                    <p>Dikerjakan oleh tim ahli yang berpengalaman di bidangnya masing-masing.</p>
+                </div>
+                <div class="feature-box">
+                    <h3>Solusi Disesuaikan</h3>
+                    <p>Layanan kami disesuaikan dengan kebutuhan spesifik dan skala bisnis Anda.</p>
+                </div>
+                <div class="feature-box">
+                    <h3>Desain Modern</h3>
+                    <p>Menghasilkan karya yang estetis, modern, dan ramah pengguna (user-friendly).</p>
+                </div>
+                <div class="feature-box">
+                    <h3>Dukungan Penuh</h3>
+                    <p>Kami siap membantu dan memberikan support terbaik bahkan setelah proyek selesai.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Syam Digital. All Rights Reserved.</p>
+            <p><a href="https://www.syamstore.my.id/">Kembali ke Beranda Utama</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>
