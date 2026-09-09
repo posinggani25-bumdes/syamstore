@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Modern dengan Mega Menu</title>
+    <!-- FontAwesome untuk Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* === RESET & GLOBAL STYLES === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* === HEADER & NAVBAR === */
+        header {
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .logo span {
+            color: #3498db;
+        }
+
+        /* Nav Menu */
+        .nav-menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            padding: 23px 18px;
+            display: inline-block;
+            color: #555;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #3498db;
+        }
+
+        /* === 1. DROPDOWN BIASA === */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 200px;
+            background-color: #ffffff;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            border-top: 3px solid #3498db;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            transform: translateY(10px);
+        }
+
+        .dropdown-menu li a {
+            display: block;
+            padding: 12px 20px;
+            color: #555;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+
+        .dropdown-menu li a:hover {
+            background-color: #f8f9fa;
+            color: #3498db;
+            padding-left: 25px;
+        }
+
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* === 2. MEGA MENU === */
+        .mega-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            width: 100vw;
+            max-width: 1200px;
+            background-color: #ffffff;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            border-top: 3px solid #3498db;
+            padding: 30px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .nav-item.static:hover .mega-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .mega-column h3 {
+            font-size: 16px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+
+        .mega-column ul li {
+            margin-bottom: 8px;
+        }
+
+        .mega-column ul li a {
+            color: #666;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .mega-column ul li a:hover {
+            color: #3498db;
+        }
+
+        /* Special Promo Card in Mega Menu */
+        .mega-card {
+            background: linear-gradient(135deg, #3498db, #8e44ad);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .mega-card h4 {
+            margin-bottom: 10px;
+        }
+
+        .mega-card button {
+            background: white;
+            color: #333;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* === SEARCH & ACTIONS === */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            padding: 8px 35px 8px 15px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            outline: none;
+            transition: width 0.4s ease;
+            width: 150px;
+        }
+
+        .search-box input:focus {
+            width: 220px;
+            border-color: #3498db;
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+
+        .btn-login {
+            background-color: #3498db;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .btn-login:hover {
+            background-color: #2980b9;
+        }
+
+        /* Mobile Toggle Icon */
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* === HERO SECTION === */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://picsum.photos/1600/600') no-repeat center center/cover;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 600px;
+        }
+
+        /* === CONTENT SECTION === */
+        .content {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* === FOOTER === */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        /* === RESPONSIVE (MOBILE) === */
+        @media (max-width: 992px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                position: absolute;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background-color: white;
+                width: 100%;
+                text-align: left;
+                transition: 0.3s ease-in-out;
+                box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-item {
+                width: 100%;
+            }
+
+            .nav-link {
+                padding: 15px 20px;
+                width: 100%;
+                border-bottom: 1px solid #eee;
+            }
+
+            .dropdown-menu, .mega-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                width: 100%;
+                display: none; /* Hide by default on mobile */
+                padding: 10px 30px;
+                background-color: #f9f9f9;
+            }
+
+            .nav-item:hover .dropdown-menu,
+            .nav-item.static:hover .mega-menu {
+                display: block; /* Basic hover fallback for tablet/mobile */
+                transform: none;
+            }
+
+            .mega-menu {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- === HEADER / NAVIGATION === -->
+    <header>
+        <div class="navbar-container">
+            <!-- Logo -->
+            <a href="#" class="logo">My<span>Website</span></a>
+
+            <!-- Navigation Links -->
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Beranda</a>
+                </li>
+
+                <!-- 1. Dropdown Biasa -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Layanan <i class="fas fa-chevron-down" style="font-size: 12px;"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Web Development</a></li>
+                        <li><a href="#">Desain Grafis</a></li>
+                        <li><a href="#">Digital Marketing</a></li>
+                        <li><a href="#">SEO Optimization</a></li>
+                    </ul>
+                </li>
+
+                <!-- 2. Mega Menu -->
+                <li class="nav-item static">
+                    <a href="#" class="nav-link">Produk / Katagori <i class="fas fa-chevron-down" style="font-size: 12px;"></i></a>
+                    <div class="mega-menu">
+                        <div class="mega-column">
+                            <h3>Pakaian Pria</h3>
+                            <ul>
+                                <li><a href="#">Kaos & Polos</a></li>
+                                <li><a href="#">Kemeja Kasual</a></li>
+                                <li><a href="#">Jaket & Hoodie</a></li>
+                                <li><a href="#">Celana Chino</a></li>
+                            </ul>
+                        </div>
+                        <div class="mega-column">
+                            <h3>Pakaian Wanita</h3>
+                            <ul>
+                                <li><a href="#">Gaun & Dress</a></li>
+                                <li><a href="#">Blouse & Atasan</a></li>
+                                <li><a href="#">Hijab Style</a></li>
+                                <li><a href="#">Rok & Celana</a></li>
+                            </ul>
+                        </div>
+                        <div class="mega-column">
+                            <h3>Aksesoris</h3>
+                            <ul>
+                                <li><a href="#">Jam Tangan</a></li>
+                                <li><a href="#">Kacamata</a></li>
+                                <li><a href="#">Tas & Dompet</a></li>
+                                <li><a href="#">Sepatu Sneaker</a></li>
+                            </ul>
+                        </div>
+                        <div class="mega-column">
+                            <div class="mega-card">
+                                <h4>Promo Spesial!</h4>
+                                <p>Diskon hingga 50% untuk produk pilihan.</p>
+                                <button>Lihat Promo</button>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Tentang Kami</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Kontak</a>
+                </li>
+            </ul>
+
+            <!-- Additional Features (Search Bar & Action Button) -->
+            <div class="nav-actions">
+                <div class="search-box">
+                    <input type="text" placeholder="Cari...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <a href="#" class="btn-login">Masuk</a>
+                <!-- Mobile Menu Icon -->
+                <div class="menu-toggle" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- === HERO SECTION === -->
+    <section class="hero">
+        <h1>Selamat Datang di Website Kami</h1>
+        <p>Solusi modern dengan navigasi tingkat tinggi, responsif, dan elegan untuk pengalaman pengguna yang lebih baik.</p>
+    </section>
+
+    <!-- === MAIN CONTENT === -->
+    <main class="content">
+        <h2>Konten Utama Website</h2>
+        <p>Arahkan kursor (hover) pada menu <strong>"Layanan"</strong> untuk melihat Dropdown Standar, atau pada menu <strong>"Produk / Kategori"</strong> untuk melihat tampilan Mega Menu yang kaya akan informasi.</p>
+    </main>
+
+    <!-- === FOOTER === -->
+    <footer>
+        <p>&copy; 2026 MyWebsite. All Rights Reserved.</p>
+    </footer>
+
+    <!-- === JAVASCRIPT === -->
+    <script>
+        // Toggle Menu Mobile
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            
+            // Toggle Icon antara Bars dan Times (X)
+            const icon = mobileMenuBtn.querySelector('i');
+            if (navMenu.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+    </script>
+</body>
+</html>
