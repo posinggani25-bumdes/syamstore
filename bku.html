@@ -1,56 +1,401 @@
-BUMDES MALAMBORA WANI II										
-BUKU KAS UMUM										
-TAHUN 2026										
-										
-Desa			: Wani 2					Laporan Bulan 	: Januari	
-Kecamatan			: Tanantovea							
-Kabupaten			: Donggala							
-										
-NO	Tanggal Transaksi	Keterangan Transaksi		Bukti Transaksi	PEMASUKAN			PENGELUARAN  		
-					Jumlah Pendapatan	Tarik dri Rek.	Unit Usaha BUMDes	Jumlah Pengeluaran	Saldo	Keterangan
-I		Saldo Awal				 Rp10,490,120 			 Rp10,490,120 	
-II	21/06/2017	Operasional Pengurus :								
-	21/06/2017	1	Belanja Buku Kwitansi					 Rp5,000 	 Rp10,485,120 	
-	21/06/2017	2	Belanja Kertas 2 Rim					 Rp192,000 	 Rp10,293,120 	
-	21/06/2017	3	Belanja Tinta Print 1 Botol					 Rp98,000 	 Rp10,195,120 	
-	21/06/2017	4	Keg. Op Pelaksana/Pengurus					 Rp1,500,000 	 Rp8,695,120 	
-	21/06/2017	5	Admin Bank					 Rp- 	 Rp8,695,120 	
-		6	Bunga Bank					 Rp- 	 Rp8,695,120 	
-										
-III	21/06/2017	Operasional Unit Usaha Air Bersih :								
-		1	Belanja Listrik Unit Air Bersih					 Rp103,000 	 Rp8,592,120 	
-		2	Belanja Listrik Unit Air Bersih					 Rp103,000 	 Rp8,489,120 	
-		3	Belanja Listrik Unit Air Bersih					 Rp103,000 	 Rp8,386,120 	
-										
-IV	21/06/2017	Operasional Unit Usaha Tambatan Perahu :								
-		1	Belanja Balon Lampu Tambatan					 Rp40,000 	 Rp8,346,120 	
-		2						 Rp105,000 	 Rp8,241,120 	
-										
-V	21/06/2017	Operasional Unit Usaha Jasa Sewa Gedung :								
-		1						 Rp- 	 Rp8,241,120 	
-		2						 Rp- 	 Rp8,241,120 	
-										
-VI	21/06/2017	BIAYA Pemilik Lahan Usaha Tambatan Perahun 30%						 Rp900,000 	 Rp7,341,120 	
-VII		Pendapatan Usaha Air Bersih					 Rp9,392,000 		 Rp16,733,120 	
-VIII		Pendapatan Usaha Tambatan Perahu					 Rp3,000,000 		 Rp19,733,120 	
-IX		Pendapatan Usaha Jasa Penyewaan Gedung					 Rp-   		 Rp19,733,120 	
-										
-X		Operasional Honorarium :								
-	21/06/2017	1	Honor Pegawai Unit Usaha Air Bersih					 Rp1,000,000 	 Rp18,733,120 	
-	21/06/2017	2	Honor Pegawai Unit Usaha Tambatan					 Rp400,000 	 Rp18,333,120 	
-	21/06/2017	3	Honor Pegawai Unit Usaha Jasa Sewa Gedung					 Rp100,000 	 Rp18,233,120 	
-	21/06/2017	4	Honor Pengurus BUMDes 3 Org					 Rp4,022,200 	 Rp14,210,920 	
-	21/06/2017	5	Honor Pengawas 3 Org					 Rp1,723,800 	 Rp12,487,120 	
-	21/06/2017	6	Honor Penasehat					 Rp574,600 	 Rp11,912,520 	
-Total Transaksi  bulan ini					 - 	 - 	 12,392,000 	 10,969,600 	 11,912,520 	 - 
-Total Transaksi kumulatif					 - 	 - 	 12,392,000 	 10,969,600 	 11,912,520 	
-										
-									Tanggal : 30 Januari 2025	
-										
-			Diperiksa Oleh :		Disetujui dan diketahui Oleh :				Dibuat Oleh :	
-			Badan Pengawas		Ketua BUMDes				Bendahara Umum BIMDes	
-										
-										
-										
-										
-			LUKMAN HADI	AGUNG BAMBANG SUDJAMIKO					MAS' INTAN	
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buku Kas Umum - BUMDes Malambora Wani II</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background-color: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+      color: #000;
+    }
+    .no-print {
+      max-width: 1200px;
+      margin: 0 auto 20px auto;
+      background: #fff;
+      padding: 15px 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-left: 8px;
+    }
+    .btn-primary { background-color: #007bff; color: white; }
+    .btn-success { background-color: #28a745; color: white; }
+    
+    .paper {
+      background: #fff;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    }
+    
+    /* Header Table Layout */
+    .header-title {
+      text-align: center;
+      font-weight: bold;
+      font-size: 16pt;
+      margin-bottom: 15px;
+      line-height: 1.3;
+    }
+    .meta-table {
+      width: 100%;
+      margin-bottom: 10px;
+      font-size: 10pt;
+      font-weight: bold;
+    }
+    .meta-table td {
+      padding: 2px 0;
+    }
+
+    /* Main Grid Table */
+    table.bku-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9pt;
+    }
+    table.bku-table th, 
+    table.bku-table td {
+      border: 1px solid #000;
+      padding: 4px;
+      vertical-align: middle;
+    }
+    table.bku-table th {
+      background-color: #ffff00; /* Kuning sesuai gambar */
+      text-align: center;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    
+    .text-center { text-align: center; }
+    .text-right { text-align: right; }
+    .bold { font-weight: bold; }
+    .italic { font-style: italic; }
+    
+    /* Column Widths */
+    .col-no { width: 30px; }
+    .col-subno { width: 30px; }
+    .col-ket { width: auto; }
+    .col-bukti { width: 80px; }
+    .col-nom { width: 95px; }
+
+    /* Inputs inside table */
+    table.bku-table input {
+      width: 100%;
+      border: none;
+      background: transparent;
+      font-size: 9pt;
+      font-family: inherit;
+    }
+    table.bku-table input:focus {
+      outline: 1px solid #007bff;
+      background: #eef6ff;
+    }
+
+    /* Signature Section */
+    .signature-container {
+      margin-top: 30px;
+      width: 100%;
+      font-size: 10pt;
+    }
+    .signature-table {
+      width: 100%;
+      text-align: center;
+      border-collapse: collapse;
+    }
+    .signature-table td {
+      padding: 5px;
+      vertical-align: top;
+    }
+    .sig-space {
+      height: 70px;
+    }
+
+    /* Print Optimization (A4 Landscape) */
+    @media print {
+      body {
+        background: none;
+        padding: 0;
+      }
+      .no-print {
+        display: none;
+      }
+      .paper {
+        box-shadow: none;
+        padding: 0;
+        width: 100%;
+      }
+      table.bku-table input {
+        border: none !important;
+      }
+      @page {
+        size: A4 landscape;
+        margin: 10mm;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="no-print">
+    <div>
+      <strong>Aplikasi Buku Kas Umum (BKU) 2026</strong>
+    </div>
+    <div>
+      <button class="btn btn-success" onclick="tambahBaris()">+ Tambah Transaksi</button>
+      <button class="btn btn-primary" onclick="window.print()">Cetak / Simpan PDF</button>
+    </div>
+  </div>
+
+  <div class="paper">
+    <div class="header-title">
+      BUMDES MALAMBORA WANI II<br>
+      BUKU KAS UMUM<br>
+      TAHUN 2026
+    </div>
+
+    <table class="meta-table">
+      <tr>
+        <td style="width: 100px;">Desa</td>
+        <td style="width: 15px;">:</td>
+        <td>Wani 2</td>
+        <td style="text-align: right;" id="labelBulan">Laporan Bulan : Januari</td>
+      </tr>
+      <tr>
+        <td>Kecamatan</td>
+        <td>:</td>
+        <td>Tanantovea</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Kabupaten</td>
+        <td>:</td>
+        <td>Donggala</td>
+        <td></td>
+      </tr>
+    </table>
+
+    <table class="bku-table" id="bkuTable">
+      <thead>
+        <tr>
+          <th rowspan="2" class="col-no">NO</th>
+          <th rowspan="2" style="width: 80px;">Tanggal<br>Transaksi</th>
+          <th rowspan="2" class="col-ket">Keterangan Transaksi</th>
+          <th rowspan="2" class="col-bukti">Bukti<br>Transaksi</th>
+          <th colspan="3">PEMASUKAN</th>
+          <th colspan="3">PENGELUARAN</th>
+        </tr>
+        <tr>
+          <th class="col-nom">Jumlah<br>Pendapatan</th>
+          <th class="col-nom">Tarik dri Rek.</th>
+          <th class="col-nom">Unit Usaha<br>BUMDes</th>
+          <th class="col-nom">Jumlah<br>Pengeluaran</th>
+          <th class="col-nom">Saldo</th>
+          <th style="width: 90px;">Keterangan</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <!-- Rows Generated via Javascript -->
+      </tbody>
+      <tfoot>
+        <tr class="bold">
+          <td colspan="4" class="text-center">Total Transaksi bulan ini</td>
+          <td class="text-right" id="totPendapatan">0</td>
+          <td class="text-right" id="totTarikRek">0</td>
+          <td class="text-right" id="totUnitUsaha">0</td>
+          <td class="text-right" id="totPengeluaran">0</td>
+          <td class="text-right" id="finalSaldo">0</td>
+          <td></td>
+        </tr>
+        <tr class="bold">
+          <td colspan="4" class="text-center">Total Transaksi kumulatif</td>
+          <td class="text-right" id="kumPendapatan">0</td>
+          <td class="text-right" id="kumTarikRek">0</td>
+          <td class="text-right" id="kumUnitUsaha">0</td>
+          <td class="text-right" id="kumPengeluaran">0</td>
+          <td class="text-right" id="kumSaldo">0</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <div class="signature-container">
+      <div style="text-align: right; margin-bottom: 10px;" id="tanggalCetak">
+        Tanggal : 30 Januari 2026
+      </div>
+      <table class="signature-table">
+        <tr>
+          <td style="width: 33%;">Diperiksa oleh :<br>Badan Pengawas</td>
+          <td style="width: 33%;">Disetujui dan diketahui Oleh :<br>Ketua BUMDes</td>
+          <td style="width: 33%;">Dibuat Oleh :<br>Bendahara Umum BUMDes</td>
+        </tr>
+        <tr>
+          <td class="sig-space"></td>
+          <td class="sig-space"></td>
+          <td class="sig-space"></td>
+        </tr>
+        <tr class="bold">
+          <td><u contenteditable="true">LUKMAN HADI</u></td>
+          <td><u contenteditable="true">AGUNG BAMBANG SUDJAMIKO</u></td>
+          <td><u contenteditable="true">MAS' INTAN</u></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // Initial Data Structure mirroring the image
+    const initialData = [
+      { no: "I", tgl: "", ket: "Saldo Awal", bukti: "", masuk1: 0, masuk2: 10490120, masuk3: 0, keluar: 0, isHeader: true },
+      { no: "II", tgl: "", ket: "Operasional Pengurus :", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 0, isHeader: true },
+      { subno: "1", tgl: "", ket: "Belanja Buku Kwitansi", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 5000 },
+      { subno: "2", tgl: "", ket: "Belanja Kertas 2 Rim", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 192000 },
+      { subno: "3", tgl: "", ket: "Belanja Tinta Print 1 Botol", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 98000 },
+      { subno: "4", tgl: "", ket: "Keg. Op Pelaksana/Pengurus", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 1500000 },
+      { subno: "5", tgl: "", ket: "Admin Bank", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 0 },
+      { subno: "6", tgl: "", ket: "Bunga Bank", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 0 },
+      
+      { no: "III", tgl: "", ket: "Operasional Unit Usaha Air Bersih :", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 0, isHeader: true },
+      { subno: "1", tgl: "", ket: "Belanja Listrik Unit Air Bersih", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 103000 },
+      { subno: "2", tgl: "", ket: "Belanja Listrik Unit Air Bersih", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 103000 },
+      { subno: "3", tgl: "", ket: "Belanja Listrik Unit Air Bersih", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 103000 },
+
+      { no: "IV", tgl: "", ket: "Operasional Unit Usaha Tambatan Perahu :", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 0, isHeader: true },
+      { subno: "1", tgl: "", ket: "Belanja Balon Lampu Tambatan", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 40000 },
+      { subno: "2", tgl: "", ket: "Belanja Pemeliharaan", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 105000 },
+
+      { no: "V", tgl: "", ket: "Operasional Unit Usaha Jasa Sewa Gedung :", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 0, isHeader: true },
+      { subno: "1", tgl: "", ket: "Operasional Gedung 1", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 0 },
+      { subno: "2", tgl: "", ket: "Operasional Gedung 2", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 0 },
+
+      { no: "VI", tgl: "", ket: "BIAYA Pemilik Lahan Usaha Tambatan Perahu 30%", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 900000, isHeader: true },
+      { no: "VII", tgl: "", ket: "Pendapatan Usaha Air Bersih", bukti: "", masuk1: 0, masuk2: 0, masuk3: 9392000, keluar: 0, isHeader: true },
+      { no: "VIII", tgl: "", ket: "Pendapatan Usaha Tambatan Perahu", bukti: "", masuk1: 0, masuk2: 0, masuk3: 3000000, keluar: 0, isHeader: true },
+      { no: "IX", tgl: "", ket: "Pendapatan Usaha Jasa Penyewaan Gedung", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 0, isHeader: true },
+
+      { no: "X", tgl: "", ket: "Operasional Honorarium :", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 0, isHeader: true },
+      { subno: "1", tgl: "", ket: "Honor Pegawai Unit Usaha Air Bersih", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 1000000 },
+      { subno: "2", tgl: "", ket: "Honor Pegawai Unit Usaha Tambatan", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 400000 },
+      { subno: "3", tgl: "", ket: "Honor Pegawai Unit Usaha Jasa Sewa Gedung", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 100000 },
+      { subno: "4", tgl: "", ket: "Honor Pengurus BUMDes 3 Org", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 4022200 },
+      { subno: "5", tgl: "", ket: "Honor Pengawas 3 Org", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 1723800 },
+      { subno: "6", tgl: "", ket: "Honor Penasehat", bukti: "", masuk1: 0, masuk2: 0, masuk3: 0, keluar: 574600 }
+    ];
+
+    function formatRupiah(val) {
+      if (val === 0 || val === "" || isNaN(val)) return "-";
+      return new Intl.NumberFormat('id-ID').format(val);
+    }
+
+    function parseInput(val) {
+      let num = parseInt(val.replace(/[^0-9]/g, ''));
+      return isNaN(num) ? 0 : num;
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('tableBody');
+      tbody.innerHTML = '';
+
+      let currentSaldo = 0;
+      let totM1 = 0, totM2 = 0, totM3 = 0, totKeluar = 0;
+
+      initialData.forEach((row, index) => {
+        // Calculate Saldo
+        let pemasukan = row.masuk1 + row.masuk2 + row.masuk3;
+        currentSaldo = currentSaldo + pemasukan - row.keluar;
+
+        totM1 += row.masuk1;
+        totM2 += row.masuk2;
+        totM3 += row.masuk3;
+        totKeluar += row.keluar;
+
+        let tr = document.createElement('tr');
+        if (row.isHeader) {
+          tr.className = 'bold';
+        }
+
+        tr.innerHTML = `
+          <td class="text-center">${row.no || ''}</td>
+          <td class="text-center">${row.subno || ''}</td>
+          <td class="${row.isHeader ? 'bold ' + (row.no === 'I' || row.no === 'VI' ? '' : 'italic') : ''}">
+            <input type="text" value="${row.ket}" onchange="updateData(${index}, 'ket', this.value)">
+          </td>
+          <td class="text-center">
+            <input type="text" class="text-center" value="${row.bukti}" onchange="updateData(${index}, 'bukti', this.value)">
+          </td>
+          <td class="text-right">
+            <input type="text" class="text-right" value="${formatRupiah(row.masuk1)}" onchange="updateNumData(${index}, 'masuk1', this.value)">
+          </td>
+          <td class="text-right">
+            <input type="text" class="text-right" value="${formatRupiah(row.masuk2)}" onchange="updateNumData(${index}, 'masuk2', this.value)">
+          </td>
+          <td class="text-right">
+            <input type="text" class="text-right" value="${formatRupiah(row.masuk3)}" onchange="updateNumData(${index}, 'masuk3', this.value)">
+          </td>
+          <td class="text-right">
+            <input type="text" class="text-right" value="${formatRupiah(row.keluar)}" onchange="updateNumData(${index}, 'keluar', this.value)">
+          </td>
+          <td class="text-right bold">Rp ${formatRupiah(currentSaldo)}</td>
+          <td><input type="text" value="${row.keterangan || ''}" onchange="updateData(${index}, 'keterangan', this.value)"></td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      // Update Footer Totals
+      document.getElementById('totPendapatan').innerText = formatRupiah(totM1);
+      document.getElementById('totTarikRek').innerText = formatRupiah(totM2);
+      document.getElementById('totUnitUsaha').innerText = formatRupiah(totM3);
+      document.getElementById('totPengeluaran').innerText = formatRupiah(totKeluar);
+      document.getElementById('finalSaldo').innerText = formatRupiah(currentSaldo);
+
+      document.getElementById('kumPendapatan').innerText = formatRupiah(totM1);
+      document.getElementById('kumTarikRek').innerText = formatRupiah(totM2);
+      document.getElementById('kumUnitUsaha').innerText = formatRupiah(totM3);
+      document.getElementById('kumPengeluaran').innerText = formatRupiah(totKeluar);
+      document.getElementById('kumSaldo').innerText = formatRupiah(currentSaldo);
+    }
+
+    function updateData(index, field, value) {
+      initialData[index][field] = value;
+    }
+
+    function updateNumData(index, field, value) {
+      initialData[index][field] = parseInput(value);
+      renderTable();
+    }
+
+    function tambahBaris() {
+      initialData.push({
+        subno: "-",
+        tgl: "",
+        ket: "Transaksi Baru",
+        bukti: "",
+        masuk1: 0,
+        masuk2: 0,
+        masuk3: 0,
+        keluar: 0
+      });
+      renderTable();
+    }
+
+    // Initial render
+    renderTable();
+  </script>
+</body>
+</html>
