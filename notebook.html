@@ -618,63 +618,126 @@
         }
 
         // --- Perbaikan Utama Expor PDF ---
-        function generatePDF() {
-            if (!previewingNoteId) return;
-            const note = notes.find(n => n.id === previewingNoteId);
-            if (!note) return;
+       // 1. Fungsi pembersih teks lengkap (Membersihkan Emoji, Unicode Rusak, & Markdown)
+<script>
+function cleanPdfText(text) {
+    if (!text) return '';
+    
+    return text
+        // Menghapus format Markdown bold (**) dan italic (*)
+        .replace(/\*\*/g, '')
+        .replace(/\*/g, '')
+        // Menghapus header markdown (#)
+        .replace(/^#+\s*/gm, '')
+        // Menghapus karakter Unicode NULL / Control characters yang bikin simbol aneh
+        .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u7F-\u9F\uFFF0-\uFFFF]/g, '')
+        // Mengubah emoji & simbol dekoratif menjadi teks biasa
+        .replace(/[^\x00-\x7F]/g, function(char) {
+            const map = {
+                '📅': '',
+                '⏰': '',
+                '📍': '',
+                '📝': '',
+                '•': '-',
+                '’': "'",
+                '‘': "'",
+                '“': '"',
+                '”': '"'
+            };
+            return map[char] !== undefined ? map[char] : '';
+        });
+}
 
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF({
-                orientation: 'p',
-                unit: 'mm',
-                format: 'a4'
-            });
+// 2. Fungsi Ekspor PDF yang diperbaiki
+function generatePDF() {
+    if (!previewingNoteId) return;
+    const note = notes.find(n => n.id === previewingNoteId);
+    if (!note) return;
 
-            // Judul
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(20);
-            doc.text(note.title, 20, 25);
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: 'mm', format: 'a4' });
 
-            // Garis pembatas
-            doc.setLineWidth(0.5);
-            doc.setDrawColor(200, 200, 200);
-            doc.line(20, 30, 190, 30);
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const margin = 20;
+    const contentWidth = pageWidth - (margin * 2);
 
-            // Subtitle Tanggal
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(10);
-            doc.setTextColor(100, 100, 100);
-            doc.text(`Dibuat pada: ${note.date} | ${note.time}`, 20, 37);
+    // Bersihkan teks sebelum diproses jsPDF
+    const safeTitle = cleanPdfText(note.title);
+    const safeContent = cleanPdfText(note.content);
 
-            // Konten
-            doc.setFontSize(12);
-            doc.setTextColor(30, 30, 30);
-            
-            const splitContent = doc.splitTextToSize(note.content || 'Tidak ada konten', 170);
-            doc.text(splitContent, 20, 47);
+    // Header Banner
+    doc.setFillColor(99, 102, 241);
+    doc.rect(0, 0, pageWidth, 35, 'F');
 
-            // Simpan File
-            const fileName = `${note.title.toLowerCase().replace(/[^a-z0-9]/g, '_')}_nota.pdf`;
-            doc.save(fileName);
+    doc.setTextColor(255, 255, 255);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(18);
+    doc.text("NOTA DIGITAL", margin, 20);
 
-            // Buka Modal Sukses
-            document.getElementById('downloadedFileName').textContent = fileName;
-            document.getElementById('downloadTime').textContent = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-            
-            closePreviewModal();
-            
-            document.getElementById('successModal').classList.remove('hidden');
-            document.getElementById('successModal').classList.add('flex');
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.text("Syam Digital Notebook", margin, 27);
+
+    // Metadata Box
+    doc.setFillColor(248, 250, 252);
+    doc.setDrawColor(226, 232, 240);
+    doc.roundedRect(margin, 45, contentWidth, 18, 3, 3, 'FD');
+
+    doc.setTextColor(71, 85, 105);
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'bold');
+    doc.text("Tanggal:", margin + 5, 56);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`${note.date} (${note.time})`, margin + 22, 56);
+
+    // Judul Nota
+    doc.setTextColor(30, 41, 59);
+    doc.setFontSize(15);
+    doc.setFont('helvetica', 'bold');
+    const splitTitle = doc.splitTextToSize(safeTitle, contentWidth);
+    doc.text(splitTitle, margin, 75);
+
+    let currentY = 75 + (splitTitle.length * 7) + 5;
+
+    // Garis Pembatas
+    doc.setDrawColor(203, 213, 225);
+    doc.line(margin, currentY, pageWidth - margin, currentY);
+    currentY += 10;
+
+    // Isi Konten Undangan (Sudah Bersih dari Simbol Aneh)
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(51, 65, 85);
+
+    const splitContent = doc.splitTextToSize(safeContent || "Tidak ada isi nota.", contentWidth);
+    
+    for (let i = 0; i < splitContent.length; i++) {
+        if (currentY > pageHeight - 20) {
+            doc.addPage();
+            currentY = 20;
         }
+        doc.text(splitContent[i], margin, currentY);
+        currentY += 6;
+    }
 
-        function downloadAnother() {
-            closeSuccessModal();
-        }
+    // Footer Halaman
+    const totalPages = doc.internal.getNumberOfPages();
+    for (let j = 1; j <= totalPages; j++) {
+        doc.setPage(j);
+        doc.setFontSize(8);
+        doc.setTextColor(148, 163, 184);
+        doc.text(`Dibuat via Syam Digital • Halaman ${j} dari ${totalPages}`, pageWidth / 2, pageHeight - 10, { align: 'center' });
+    }
 
-        function closeSuccessModal() {
-            document.getElementById('successModal').classList.add('hidden');
-            document.getElementById('successModal').classList.remove('flex');
-        }
-    </script>
+    const fileName = `${safeTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_nota.pdf`;
+    doc.save(fileName);
+
+    document.getElementById('downloadedFileName').textContent = fileName;
+    closePreviewModal();
+    document.getElementById('successModal').classList.remove('hidden');
+    document.getElementById('successModal').classList.add('flex');
+}
+</script>
 </body>
 </html>
