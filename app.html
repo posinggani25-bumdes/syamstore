@@ -36,21 +36,11 @@
       margin-bottom: 15px;
       border-bottom: 3px solid;
     }
-    .arrival .card-title {
-      color: #1d72b8;
-      border-color: #1d72b8;
-    }
-    .departure .card-title {
-      color: #d97706;
-      border-color: #d97706;
-    }
-    .recap .card-title {
-      color: #2b6cb0;
-      border-color: #2b6cb0;
-    }
-    .form-group {
-      margin-bottom: 12px;
-    }
+    .arrival .card-title { color: #1d72b8; border-color: #1d72b8; }
+    .departure .card-title { color: #d97706; border-color: #d97706; }
+    .recap .card-title { color: #2b6cb0; border-color: #2b6cb0; }
+    
+    .form-group { margin-bottom: 12px; }
     label {
       display: block;
       font-size: 0.85rem;
@@ -69,37 +59,41 @@
       outline: none;
       border-color: #007bff;
     }
-    .row {
+    .row { display: flex; gap: 10px; }
+    .row .form-group { flex: 1; }
+    
+    .btn-group {
       display: flex;
       gap: 10px;
-    }
-    .row .form-group {
-      flex: 1;
+      margin-top: 15px;
     }
     .btn-wa {
-      width: 100%;
+      flex: 2;
       background-color: #25d366;
       color: white;
       border: none;
       padding: 12px;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: bold;
       border-radius: 5px;
       cursor: pointer;
-      margin-top: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
     }
-    .btn-wa:hover {
-      background-color: #1ebc57;
+    .btn-save-only {
+      flex: 1;
+      background-color: #3182ce;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
     }
+    .btn-wa:hover { background-color: #1ebc57; }
+    .btn-save-only:hover { background-color: #2b6cb0; }
+
     /* Style Tabel Rekap */
-    .table-container {
-      overflow-x: auto;
-      margin-top: 10px;
-    }
+    .table-container { overflow-x: auto; margin-top: 10px; }
     table {
       width: 100%;
       border-collapse: collapse;
@@ -110,10 +104,7 @@
       padding: 8px;
       text-align: left;
     }
-    th {
-      background-color: #f7fafc;
-      color: #2d3748;
-    }
+    th { background-color: #f7fafc; color: #2d3748; }
     .badge-arr {
       background-color: #ebf8ff;
       color: #2b6cb0;
@@ -206,9 +197,10 @@
         </div>
       </div>
 
-      <button type="button" class="btn-wa" onclick="sendArrivalWA()">
-        Kirim Kedatangan ke WA & Simpan
-      </button>
+      <div class="btn-group">
+        <button type="button" class="btn-save-only" onclick="processArrival(false)">Simpan Rekap</button>
+        <button type="button" class="btn-wa" onclick="processArrival(true)">Kirim WA & Simpan</button>
+      </div>
     </form>
   </div>
 
@@ -263,9 +255,10 @@
         </div>
       </div>
 
-      <button type="button" class="btn-wa" onclick="sendDepartureWA()">
-        Kirim Keberangkatan ke WA & Simpan
-      </button>
+      <div class="btn-group">
+        <button type="button" class="btn-save-only" onclick="processDeparture(false)">Simpan Rekap</button>
+        <button type="button" class="btn-wa" onclick="processDeparture(true)">Kirim WA & Simpan</button>
+      </div>
     </form>
   </div>
 
@@ -287,18 +280,29 @@
           </tr>
         </thead>
         <tbody id="recapTableBody">
-          <!-- Data akan tampil di sini secara otomatis -->
+          <!-- Data tampil otomatis -->
         </tbody>
       </table>
     </div>
   </div>
 
 <script>
-  // Ambil data rekap dari LocalStorage saat halaman pertama kali dimuat
-  let shipRecords = JSON.parse(localStorage.getItem('shipRecords')) || [];
+  let shipRecords = [];
 
-  // Tampilkan tabel rekap saat pertama kali dibuka
-  renderRecapTable();
+  // Panggil saat halaman dibuka
+  window.onload = function() {
+    loadRecords();
+  };
+
+  function loadRecords() {
+    try {
+      const data = localStorage.getItem('shipRecords');
+      shipRecords = data ? JSON.parse(data) : [];
+    } catch (e) {
+      shipRecords = [];
+    }
+    renderRecapTable();
+  }
 
   function formatArrDate(dateString) {
     if (!dateString) return "";
@@ -312,20 +316,20 @@
     return `${parseInt(parts[2], 10)}-${parseInt(parts[1], 10)}-${parts[0]}`;
   }
 
-  // SIMPAN & KIRIM KEDATANGAN
-  function sendArrivalWA() {
+  // PROSES KEDATANGAN
+  function processArrival(openWA) {
     const arrShip = document.getElementById('arrShip').value;
     const arrOrigin = document.getElementById('arrOrigin').value;
     const rawDate = document.getElementById('arrDate').value;
-    const arrDate = formatArrDate(rawDate);
     const arrTime = document.getElementById('arrTime').value;
     const arrCrew = document.getElementById('arrCrew').value;
 
-    if (!arrShip || !arrOrigin || !arrDate || !arrTime || !arrCrew) {
-      alert("Harap lengkapi semua data Kedatangan!");
+    if (!arrShip || !arrOrigin || !rawDate || !arrTime || !arrCrew) {
+      alert("Harap isi semua kolom Kedatangan terlebih dahulu!");
       return;
     }
 
+    const arrDate = formatArrDate(rawDate);
     const cleanShip = arrShip.replace("KLM.", "");
 
     const message = `KEDATANGAN
@@ -335,7 +339,6 @@ Tiba. : ${arrDate}
 Jam  : ${arrTime}
 Crew : ${arrCrew}`;
 
-    // Simpan ke Rekap
     const newRecord = {
       id: Date.now(),
       type: 'KEDATANGAN',
@@ -350,24 +353,29 @@ Crew : ${arrCrew}`;
     shipRecords.unshift(newRecord);
     saveAndRender();
 
-    // Buka WA
-    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
+    if (openWA) {
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
+    } else {
+      alert("Data Kedatangan berhasil disimpan ke Rekap!");
+    }
+
+    document.getElementById('formArrival').reset();
   }
 
-  // SIMPAN & KIRIM KEBERANGKATAN
-  function sendDepartureWA() {
+  // PROSES KEBERANGKATAN
+  function processDeparture(openWA) {
     const depShip = document.getElementById('depShip').value;
     const depDestination = document.getElementById('depDestination').value;
     const rawDate = document.getElementById('depDate').value;
-    const depDate = formatDepDate(rawDate);
     const depTime = document.getElementById('depTime').value;
     const depCrew = document.getElementById('depCrew').value;
 
-    if (!depShip || !depDestination || !depDate || !depTime || !depCrew) {
-      alert("Harap lengkapi semua data Keberangkatan!");
+    if (!depShip || !depDestination || !rawDate || !depTime || !depCrew) {
+      alert("Harap isi semua kolom Keberangkatan terlebih dahulu!");
       return;
     }
 
+    const depDate = formatDepDate(rawDate);
     const cleanShip = depShip.replace("KLM.", "");
 
     const message = `KEBERANGKATAN 
@@ -377,7 +385,6 @@ BRKT. TGL : ${depDate}
 JAM.      : ${depTime}
 CREW      : ${depCrew}`;
 
-    // Simpan ke Rekap
     const newRecord = {
       id: Date.now(),
       type: 'KEBERANGKATAN',
@@ -392,23 +399,30 @@ CREW      : ${depCrew}`;
     shipRecords.unshift(newRecord);
     saveAndRender();
 
-    // Buka WA
-    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
+    if (openWA) {
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
+    } else {
+      alert("Data Keberangkatan berhasil disimpan ke Rekap!");
+    }
+
+    document.getElementById('formDeparture').reset();
   }
 
-  // Fungsi untuk menyimpan ke LocalStorage dan Refresh Tabel
   function saveAndRender() {
-    localStorage.setItem('shipRecords', JSON.stringify(shipRecords));
+    try {
+      localStorage.setItem('shipRecords', JSON.stringify(shipRecords));
+    } catch (e) {
+      console.error("Gagal menyimpan ke LocalStorage:", e);
+    }
     renderRecapTable();
   }
 
-  // Tampilkan data ke tabel HTML
   function renderRecapTable() {
     const tbody = document.getElementById('recapTableBody');
     tbody.innerHTML = '';
 
-    if (shipRecords.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#888;">Belum ada data rekap</td></tr>`;
+    if (!shipRecords || shipRecords.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#888; padding: 15px;">Belum ada data rekap tersimpan</td></tr>`;
       return;
     }
 
@@ -431,7 +445,6 @@ CREW      : ${depCrew}`;
     });
   }
 
-  // Kirim ulang pesan dari rekap
   function resendWA(id) {
     const item = shipRecords.find(r => r.id === id);
     if (item) {
@@ -439,7 +452,6 @@ CREW      : ${depCrew}`;
     }
   }
 
-  // Hapus item rekap tunggal
   function deleteRecord(id) {
     if (confirm("Hapus catatan ini dari rekap?")) {
       shipRecords = shipRecords.filter(r => r.id !== id);
@@ -447,7 +459,6 @@ CREW      : ${depCrew}`;
     }
   }
 
-  // Hapus semua data rekap
   function clearAllData() {
     if (confirm("Apakah kamu yakin ingin menghapus SEMUA data rekap?")) {
       shipRecords = [];
