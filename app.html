@@ -3,42 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jadwal Kedatangan & Keberangkatan Kapal</title>
+  <title>Jadwal Kapal - Kedatangan & Keberangkatan</title>
   <style>
     * {
       box-sizing: border-box;
       font-family: Arial, sans-serif;
     }
     body {
-      background-color: #f4f6f9;
+      background-color: #e9ecef;
       margin: 0;
-      padding: 20px;
+      padding: 20px 10px;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
     }
-    .container {
-      background-color: #fff;
-      padding: 20px 25px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      max-width: 500px;
+    .card {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      max-width: 480px;
       width: 100%;
     }
-    h2 {
-      text-align: center;
-      color: #1a365d;
-      margin-top: 0;
-      margin-bottom: 20px;
-      font-size: 1.3rem;
-    }
-    .section-title {
+    .card-title {
+      font-size: 1.2rem;
       font-weight: bold;
-      color: #2b6cb0;
-      border-bottom: 2px solid #e2e8f0;
-      padding-bottom: 5px;
-      margin-top: 20px;
+      text-align: center;
+      padding-bottom: 10px;
       margin-bottom: 15px;
-      font-size: 1rem;
+      border-bottom: 3px solid;
+    }
+    /* Warna pembeda Kedatangan & Keberangkatan */
+    .arrival .card-title {
+      color: #1d72b8;
+      border-color: #1d72b8;
+    }
+    .departure .card-title {
+      color: #d97706;
+      border-color: #d97706;
     }
     .form-group {
       margin-bottom: 12px;
@@ -48,18 +51,18 @@
       font-size: 0.85rem;
       font-weight: bold;
       margin-bottom: 4px;
-      color: #4a5568;
+      color: #333;
     }
     input, select {
       width: 100%;
       padding: 10px;
-      border: 1px solid #cbd5e0;
+      border: 1px solid #ccc;
       border-radius: 5px;
       font-size: 0.9rem;
     }
     input:focus, select:focus {
       outline: none;
-      border-color: #3182ce;
+      border-color: #007bff;
     }
     .row {
       display: flex;
@@ -74,11 +77,11 @@
       color: white;
       border: none;
       padding: 12px;
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: bold;
       border-radius: 5px;
       cursor: pointer;
-      margin-top: 25px;
+      margin-top: 15px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -91,165 +94,175 @@
 </head>
 <body>
 
-<div class="container">
-  <h2>Form Kedatangan & Keberangkatan</h2>
-  
-  <form id="shipForm">
-    <!-- KEDATANGAN -->
-    <div class="section-title">KEDATANGAN</div>
-    
-    <div class="form-group">
-      <label for="arrShip">Nama Kapal (KLM)</label>
-      <select id="arrShip" required>
-        <option value="">-- Pilih Kapal --</option>
-        <option value="KLM.SUMBER RIZKY">KLM.SUMBER RIZKY</option>
-        <option value="KLM.SUMBER RIZKY 02">KLM.SUMBER RIZKY 02</option>
-        <option value="KLM.SUMBER REZKY A">KLM.SUMBER REZKY A</option>
-        <option value="KLM.ADI RAHMATULLAH PUTRA">KLM.ADI RAHMATULLAH PUTRA</option>
-        <option value="KLM.SUMBER REZKY B">KLM.SUMBER REZKY B</option>
-        <option value="KLM.QUDRAT ILAHI">KLM.QUDRAT ILAHI</option>
-        <option value="KLM.FIRDAH JAYA 03">KLM.FIRDAH JAYA 03</option>
-        <option value="KLM.SYUKRAN 3">KLM.SYUKRAN 3</option>
-        <option value="KLM.SYUKRAN 03">KLM.SYUKRAN 03</option>
-        <option value="KLM.BUNGA RIZKA">KLM.BUNGA RIZKA</option>
-        <option value="KLM.SURYA UTAMA 77">KLM.SURYA UTAMA 77</option>
-        <option value="KLM.MARHABAN 02">KLM.MARHABAN 02</option>
-        <option value="KLM.BERKAT SABAR 05">KLM.BERKAT SABAR 05</option>
-        <option value="KLM.BERKAH ILAHI 99">KLM.BERKAH ILAHI 99</option>
-        <option value="KLM.SUMBER REZKY 88">KLM.SUMBER REZKY 88</option>
-        <option value="KLM.ANUGERAH REZKY PUTRA">KLM.ANUGERAH REZKY PUTRA</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="arrOrigin">Asal</label>
-      <input type="text" id="arrOrigin" placeholder="Contoh: SAMARINDA" required>
-    </div>
-
-    <div class="row">
+  <!-- KARTU KEDATANGAN -->
+  <div class="card arrival">
+    <div class="card-title">KEDATANGAN KAPAL</div>
+    <form id="formArrival">
       <div class="form-group">
-        <label for="arrDate">Tiba (Tgl)</label>
-        <input type="date" id="arrDate" required>
+        <label for="arrShip">Nama Kapal (KLM)</label>
+        <select id="arrShip" required>
+          <option value="">-- Pilih Kapal --</option>
+          <option value="KLM.SUMBER RIZKY">KLM.SUMBER RIZKY</option>
+          <option value="KLM.SUMBER RIZKY 02">KLM.SUMBER RIZKY 02</option>
+          <option value="KLM.SUMBER REZKY A">KLM.SUMBER REZKY A</option>
+          <option value="KLM.ADI RAHMATULLAH PUTRA">KLM.ADI RAHMATULLAH PUTRA</option>
+          <option value="KLM.SUMBER REZKY B">KLM.SUMBER REZKY B</option>
+          <option value="KLM.QUDRAT ILAHI">KLM.QUDRAT ILAHI</option>
+          <option value="KLM.FIRDAH JAYA 03">KLM.FIRDAH JAYA 03</option>
+          <option value="KLM.SYUKRAN 3">KLM.SYUKRAN 3</option>
+          <option value="KLM.SYUKRAN 03">KLM.SYUKRAN 03</option>
+          <option value="KLM.BUNGA RIZKA">KLM.BUNGA RIZKA</option>
+          <option value="KLM.SURYA UTAMA 77">KLM.SURYA UTAMA 77</option>
+          <option value="KLM.MARHABAN 02">KLM.MARHABAN 02</option>
+          <option value="KLM.BERKAT SABAR 05">KLM.BERKAT SABAR 05</option>
+          <option value="KLM.BERKAH ILAHI 99">KLM.BERKAH ILAHI 99</option>
+          <option value="KLM.SUMBER REZKY 88">KLM.SUMBER REZKY 88</option>
+          <option value="KLM.ANUGERAH REZKY PUTRA">KLM.ANUGERAH REZKY PUTRA</option>
+        </select>
       </div>
-      <div class="form-group">
-        <label for="arrTime">Jam</label>
-        <input type="time" id="arrTime" required>
-      </div>
-      <div class="form-group">
-        <label for="arrCrew">Crew</label>
-        <input type="number" id="arrCrew" placeholder="4" required>
-      </div>
-    </div>
 
-    <!-- KEBERANGKATAN -->
-    <div class="section-title">KEBERANGKATAN</div>
-
-    <div class="form-group">
-      <label for="depShip">Nama Kapal (KLM)</label>
-      <select id="depShip" required>
-        <option value="">-- Pilih Kapal --</option>
-        <option value="KLM.SUMBER RIZKY">KLM.SUMBER RIZKY</option>
-        <option value="KLM.SUMBER RIZKY 02">KLM.SUMBER RIZKY 02</option>
-        <option value="KLM.SUMBER REZKY A">KLM.SUMBER REZKY A</option>
-        <option value="KLM.ADI RAHMATULLAH PUTRA">KLM.ADI RAHMATULLAH PUTRA</option>
-        <option value="KLM.SUMBER REZKY B">KLM.SUMBER REZKY B</option>
-        <option value="KLM.QUDRAT ILAHI">KLM.QUDRAT ILAHI</option>
-        <option value="KLM.FIRDAH JAYA 03">KLM.FIRDAH JAYA 03</option>
-        <option value="KLM.SYUKRAN 3">KLM.SYUKRAN 3</option>
-        <option value="KLM.SYUKRAN 03">KLM.SYUKRAN 03</option>
-        <option value="KLM.BUNGA RIZKA">KLM.BUNGA RIZKA</option>
-        <option value="KLM.SURYA UTAMA 77">KLM.SURYA UTAMA 77</option>
-        <option value="KLM.MARHABAN 02">KLM.MARHABAN 02</option>
-        <option value="KLM.BERKAT SABAR 05">KLM.BERKAT SABAR 05</option>
-        <option value="KLM.BERKAH ILAHI 99">KLM.BERKAH ILAHI 99</option>
-        <option value="KLM.SUMBER REZKY 88">KLM.SUMBER REZKY 88</option>
-        <option value="KLM.ANUGERAH REZKY PUTRA">KLM.ANUGERAH REZKY PUTRA</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="depDestination">Tujuan</label>
-      <input type="text" id="depDestination" placeholder="Contoh: SAMARINDA" required>
-    </div>
-
-    <div class="row">
       <div class="form-group">
-        <label for="depDate">Brkt. Tgl</label>
-        <input type="date" id="depDate" required>
+        <label for="arrOrigin">Asal</label>
+        <input type="text" id="arrOrigin" placeholder="Contoh: SAMARINDA" required>
       </div>
-      <div class="form-group">
-        <label for="depTime">Jam</label>
-        <input type="time" id="depTime" required>
-      </div>
-      <div class="form-group">
-        <label for="depCrew">Crew</label>
-        <input type="number" id="depCrew" placeholder="5" required>
-      </div>
-    </div>
 
-    <button type="button" class="btn-wa" onclick="shareToWhatsApp()">
-      Kirim ke WhatsApp
-    </button>
-  </form>
-</div>
+      <div class="row">
+        <div class="form-group">
+          <label for="arrDate">Tiba (Tgl)</label>
+          <input type="date" id="arrDate" required>
+        </div>
+        <div class="form-group">
+          <label for="arrTime">Jam</label>
+          <input type="time" id="arrTime" required>
+        </div>
+        <div class="form-group">
+          <label for="arrCrew">Crew</label>
+          <input type="number" id="arrCrew" placeholder="4" required>
+        </div>
+      </div>
+
+      <button type="button" class="btn-wa" onclick="sendArrivalWA()">
+        Kirim Kedatangan ke WA
+      </button>
+    </form>
+  </div>
+
+  <!-- KARTU KEBERANGKATAN -->
+  <div class="card departure">
+    <div class="card-title">KEBERANGKATAN KAPAL</div>
+    <form id="formDeparture">
+      <div class="form-group">
+        <label for="depShip">Nama Kapal (KLM)</label>
+        <select id="depShip" required>
+          <option value="">-- Pilih Kapal --</option>
+          <option value="KLM.SUMBER RIZKY">KLM.SUMBER RIZKY</option>
+          <option value="KLM.SUMBER RIZKY 02">KLM.SUMBER RIZKY 02</option>
+          <option value="KLM.SUMBER REZKY A">KLM.SUMBER REZKY A</option>
+          <option value="KLM.ADI RAHMATULLAH PUTRA">KLM.ADI RAHMATULLAH PUTRA</option>
+          <option value="KLM.SUMBER REZKY B">KLM.SUMBER REZKY B</option>
+          <option value="KLM.QUDRAT ILAHI">KLM.QUDRAT ILAHI</option>
+          <option value="KLM.FIRDAH JAYA 03">KLM.FIRDAH JAYA 03</option>
+          <option value="KLM.SYUKRAN 3">KLM.SYUKRAN 3</option>
+          <option value="KLM.SYUKRAN 03">KLM.SYUKRAN 03</option>
+          <option value="KLM.BUNGA RIZKA">KLM.BUNGA RIZKA</option>
+          <option value="KLM.SURYA UTAMA 77">KLM.SURYA UTAMA 77</option>
+          <option value="KLM.MARHABAN 02">KLM.MARHABAN 02</option>
+          <option value="KLM.BERKAT SABAR 05">KLM.BERKAT SABAR 05</option>
+          <option value="KLM.BERKAH ILAHI 99">KLM.BERKAH ILAHI 99</option>
+          <option value="KLM.SUMBER REZKY 88">KLM.SUMBER REZKY 88</option>
+          <option value="KLM.ANUGERAH REZKY PUTRA">KLM.ANUGERAH REZKY PUTRA</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="depDestination">Tujuan</label>
+        <input type="text" id="depDestination" placeholder="Contoh: SAMARINDA" required>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label for="depDate">Brkt. Tgl</label>
+          <input type="date" id="depDate" required>
+        </div>
+        <div class="form-group">
+          <label for="depTime">Jam</label>
+          <input type="time" id="depTime" required>
+        </div>
+        <div class="form-group">
+          <label for="depCrew">Crew</label>
+          <input type="number" id="depCrew" placeholder="5" required>
+        </div>
+      </div>
+
+      <button type="button" class="btn-wa" onclick="sendDepartureWA()">
+        Kirim Keberangkatan ke WA
+      </button>
+    </form>
+  </div>
 
 <script>
-  function formatDate(dateString) {
+  // Fungsi format tanggal Kedatangan (10/9/2026)
+  function formatArrDate(dateString) {
     if (!dateString) return "";
     const parts = dateString.split("-");
-    // Format tanggal menjadi d/m/Y (Menghilangkan angka 0 di depan jika ada)
-    const day = parseInt(parts[2], 10);
-    const month = parseInt(parts[1], 10);
-    const year = parts[0];
-    return `${day}/${month}/${year}`;
+    return `${parseInt(parts[2], 10)}/${parseInt(parts[1], 10)}/${parts[0]}`;
   }
 
-  function shareToWhatsApp() {
-    // Ambil data Kedatangan
+  // Fungsi format tanggal Keberangkatan (11-9-2026)
+  function formatDepDate(dateString) {
+    if (!dateString) return "";
+    const parts = dateString.split("-");
+    return `${parseInt(parts[2], 10)}-${parseInt(parts[1], 10)}-${parts[0]}`;
+  }
+
+  // KIRIM PESAN KEDATANGAN ONLY
+  function sendArrivalWA() {
     const arrShip = document.getElementById('arrShip').value;
     const arrOrigin = document.getElementById('arrOrigin').value;
-    const arrDate = formatDate(document.getElementById('arrDate').value);
+    const arrDate = formatArrDate(document.getElementById('arrDate').value);
     const arrTime = document.getElementById('arrTime').value;
     const arrCrew = document.getElementById('arrCrew').value;
 
-    // Ambil data Keberangkatan
-    const depShip = document.getElementById('depShip').value;
-    const depDestination = document.getElementById('depDestination').value;
-    const depDate = formatDate(document.getElementById('depDate').value);
-    const depTime = document.getElementById('depTime').value;
-    const depCrew = document.getElementById('depCrew').value;
-
-    // Validasi input
-    if (!arrShip || !arrOrigin || !arrDate || !arrTime || !arrCrew || 
-        !depShip || !depDestination || !depDate || !depTime || !depCrew) {
-      alert("Harap isi semua kolom terlebih dahulu.");
+    if (!arrShip || !arrOrigin || !arrDate || !arrTime || !arrCrew) {
+      alert("Harap lengkapi semua data Kedatangan!");
       return;
     }
 
-    // Pembersihan nama kapal dari awalan "KLM." jika pengguna ingin format bersih sesuai contoh
-    const cleanArrShip = arrShip.replace("KLM.", "");
-    const cleanDepShip = depShip.replace("KLM.", "");
+    const cleanShip = arrShip.replace("KLM.", "");
 
-    // Susun pesan WhatsApp
     const message = `KEDATANGAN
-KLM  : ${cleanArrShip}
+KLM  : ${cleanShip}
 Asal  : ${arrOrigin}
 Tiba. : ${arrDate}
 Jam  : ${arrTime}
-Crew : ${arrCrew}
+Crew : ${arrCrew}`;
 
-KEBERANGKATAN 
-KLM  : ${cleanDepShip}
+    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
+  }
+
+  // KIRIM PESAN KEBERANGKATAN ONLY
+  function sendDepartureWA() {
+    const depShip = document.getElementById('depShip').value;
+    const depDestination = document.getElementById('depDestination').value;
+    const depDate = formatDepDate(document.getElementById('depDate').value);
+    const depTime = document.getElementById('depTime').value;
+    const depCrew = document.getElementById('depCrew').value;
+
+    if (!depShip || !depDestination || !depDate || !depTime || !depCrew) {
+      alert("Harap lengkapi semua data Keberangkatan!");
+      return;
+    }
+
+    const cleanShip = depShip.replace("KLM.", "");
+
+    const message = `KEBERANGKATAN 
+KLM  : ${cleanShip}
 TUJUAN     : ${depDestination}
-BRKT. TGL : ${depDate.replace(/\//g, "-")}
+BRKT. TGL : ${depDate}
 JAM.      : ${depTime}
 CREW      : ${depCrew}`;
 
-    // Encode URL & Buka WhatsApp
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodedMessage}`;
-    
-    window.open(whatsappUrl, '_blank');
+    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
   }
 </script>
 
