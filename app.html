@@ -92,6 +92,20 @@
     .btn-wa:hover { background-color: #1ebc57; }
     .btn-save-only:hover { background-color: #2b6cb0; }
 
+    /* Header Tombol Rekap */
+    .recap-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .recap-actions {
+      display: flex;
+      gap: 8px;
+    }
+
     /* Style Tabel Rekap */
     .table-container { overflow-x: auto; margin-top: 10px; }
     table {
@@ -131,6 +145,17 @@
     }
     .btn-send { background-color: #25d366; }
     .btn-delete { background-color: #e53e3e; }
+    
+    .btn-pdf {
+      background-color: #e53e3e;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
     .btn-clear {
       background-color: #718096;
       color: white;
@@ -139,8 +164,37 @@
       border-radius: 5px;
       cursor: pointer;
       font-size: 0.8rem;
-      float: right;
-      margin-bottom: 10px;
+    }
+    .btn-pdf:hover { background-color: #c53030; }
+    .btn-clear:hover { background-color: #4a5568; }
+
+    /* TAMPILAN CETAK/PDF */
+    @media print {
+      body {
+        background-color: white;
+        padding: 0;
+      }
+      .arrival, .departure, .recap-actions, .btn-action, th:last-child, td:last-child {
+        display: none !important; /* Sembunyikan form dan kolom aksi saat di-print */
+      }
+      .card.recap {
+        box-shadow: none;
+        border: none;
+        max-width: 100%;
+        width: 100%;
+        padding: 0;
+      }
+      .card-title {
+        border-bottom: 2px solid #000;
+        color: #000 !important;
+      }
+      table {
+        font-size: 10pt;
+      }
+      th {
+        background-color: #eee !important;
+        -webkit-print-color-adjust: exact;
+      }
     }
   </style>
 </head>
@@ -264,8 +318,13 @@
 
   <!-- KARTU REKAP DATA -->
   <div class="card recap">
-    <button class="btn-clear" onclick="clearAllData()">Hapus Semua Rekap</button>
-    <div class="card-title" style="text-align: left;">REKAP DATA INPUT</div>
+    <div class="recap-header">
+      <div class="card-title" style="margin:0; border:none; padding:0;">REKAP DATA KAPAL</div>
+      <div class="recap-actions">
+        <button class="btn-pdf" onclick="exportPDF()">📄 Export PDF</button>
+        <button class="btn-clear" onclick="clearAllData()">Hapus Semua</button>
+      </div>
+    </div>
     
     <div class="table-container">
       <table>
@@ -289,7 +348,6 @@
 <script>
   let shipRecords = [];
 
-  // Panggil saat halaman dibuka
   window.onload = function() {
     loadRecords();
   };
@@ -316,7 +374,6 @@
     return `${parseInt(parts[2], 10)}-${parseInt(parts[1], 10)}-${parts[0]}`;
   }
 
-  // PROSES KEDATANGAN
   function processArrival(openWA) {
     const arrShip = document.getElementById('arrShip').value;
     const arrOrigin = document.getElementById('arrOrigin').value;
@@ -362,7 +419,6 @@ Crew : ${arrCrew}`;
     document.getElementById('formArrival').reset();
   }
 
-  // PROSES KEBERANGKATAN
   function processDeparture(openWA) {
     const depShip = document.getElementById('depShip').value;
     const depDestination = document.getElementById('depDestination').value;
@@ -464,6 +520,15 @@ CREW      : ${depCrew}`;
       shipRecords = [];
       saveAndRender();
     }
+  }
+
+  // FUNGSI EXPORT PDF
+  function exportPDF() {
+    if (!shipRecords || shipRecords.length === 0) {
+      alert("Belum ada data rekap untuk diekspor ke PDF!");
+      return;
+    }
+    window.print();
   }
 </script>
 
