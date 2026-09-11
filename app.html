@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jadwal Kapal - Kedatangan & Keberangkatan</title>
+  <title>Aplikasi Jadwal Kapal & Rekap Data</title>
   <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjdD6S02k7kXZ2T95ovWBCQpuHxOherr8qbplCWpwvkVWWm-oH3o-cBuXe6QV6ZI6OKf3-942MF3N8TiTLzgbB9nGOnvseOFkq4IkVc8ZC5yUObmXMUxnxyy6s6ciFRThKeuRXkBZCcowpVH4xIvegSyzjJNLoRGHwE96wlGNz41g4M6VKP2sL6BZ-XQhr-/s500/agas-88.png">
+
   <style>
     * {
       box-sizing: border-box;
@@ -24,7 +25,7 @@
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      max-width: 480px;
+      max-width: 650px;
       width: 100%;
     }
     .card-title {
@@ -35,7 +36,6 @@
       margin-bottom: 15px;
       border-bottom: 3px solid;
     }
-    /* Warna pembeda Kedatangan & Keberangkatan */
     .arrival .card-title {
       color: #1d72b8;
       border-color: #1d72b8;
@@ -43,6 +43,10 @@
     .departure .card-title {
       color: #d97706;
       border-color: #d97706;
+    }
+    .recap .card-title {
+      color: #2b6cb0;
+      border-color: #2b6cb0;
     }
     .form-group {
       margin-bottom: 12px;
@@ -91,6 +95,62 @@
     .btn-wa:hover {
       background-color: #1ebc57;
     }
+    /* Style Tabel Rekap */
+    .table-container {
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    th, td {
+      border: 1px solid #cbd5e0;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f7fafc;
+      color: #2d3748;
+    }
+    .badge-arr {
+      background-color: #ebf8ff;
+      color: #2b6cb0;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 0.75rem;
+    }
+    .badge-dep {
+      background-color: #fffaf0;
+      color: #dd6b20;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 0.75rem;
+    }
+    .btn-action {
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      color: white;
+    }
+    .btn-send { background-color: #25d366; }
+    .btn-delete { background-color: #e53e3e; }
+    .btn-clear {
+      background-color: #718096;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      float: right;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
@@ -124,7 +184,11 @@
 
       <div class="form-group">
         <label for="arrOrigin">Asal</label>
-        <input type="text" id="arrOrigin" placeholder="Contoh: SAMARINDA" required>
+        <select id="arrOrigin" required>
+          <option value="">-- Pilih Asal --</option>
+          <option value="SAMARINDA">SAMARINDA</option>
+          <option value="TARAKAN">TARAKAN</option>
+        </select>
       </div>
 
       <div class="row">
@@ -143,7 +207,7 @@
       </div>
 
       <button type="button" class="btn-wa" onclick="sendArrivalWA()">
-        Kirim Kedatangan ke WA
+        Kirim Kedatangan ke WA & Simpan
       </button>
     </form>
   </div>
@@ -177,7 +241,11 @@
 
       <div class="form-group">
         <label for="depDestination">Tujuan</label>
-        <input type="text" id="depDestination" placeholder="Contoh: SAMARINDA" required>
+        <select id="depDestination" required>
+          <option value="">-- Pilih Tujuan --</option>
+          <option value="SAMARINDA">SAMARINDA</option>
+          <option value="TARAKAN">TARAKAN</option>
+        </select>
       </div>
 
       <div class="row">
@@ -196,31 +264,60 @@
       </div>
 
       <button type="button" class="btn-wa" onclick="sendDepartureWA()">
-        Kirim Keberangkatan ke WA
+        Kirim Keberangkatan ke WA & Simpan
       </button>
     </form>
   </div>
 
+  <!-- KARTU REKAP DATA -->
+  <div class="card recap">
+    <button class="btn-clear" onclick="clearAllData()">Hapus Semua Rekap</button>
+    <div class="card-title" style="text-align: left;">REKAP DATA INPUT</div>
+    
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Kapal</th>
+            <th>Lokasi</th>
+            <th>Tgl & Jam</th>
+            <th>Crew</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="recapTableBody">
+          <!-- Data akan tampil di sini secara otomatis -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 <script>
-  // Fungsi format tanggal Kedatangan (10/9/2026)
+  // Ambil data rekap dari LocalStorage saat halaman pertama kali dimuat
+  let shipRecords = JSON.parse(localStorage.getItem('shipRecords')) || [];
+
+  // Tampilkan tabel rekap saat pertama kali dibuka
+  renderRecapTable();
+
   function formatArrDate(dateString) {
     if (!dateString) return "";
     const parts = dateString.split("-");
     return `${parseInt(parts[2], 10)}/${parseInt(parts[1], 10)}/${parts[0]}`;
   }
 
-  // Fungsi format tanggal Keberangkatan (11-9-2026)
   function formatDepDate(dateString) {
     if (!dateString) return "";
     const parts = dateString.split("-");
     return `${parseInt(parts[2], 10)}-${parseInt(parts[1], 10)}-${parts[0]}`;
   }
 
-  // KIRIM PESAN KEDATANGAN ONLY
+  // SIMPAN & KIRIM KEDATANGAN
   function sendArrivalWA() {
     const arrShip = document.getElementById('arrShip').value;
     const arrOrigin = document.getElementById('arrOrigin').value;
-    const arrDate = formatArrDate(document.getElementById('arrDate').value);
+    const rawDate = document.getElementById('arrDate').value;
+    const arrDate = formatArrDate(rawDate);
     const arrTime = document.getElementById('arrTime').value;
     const arrCrew = document.getElementById('arrCrew').value;
 
@@ -238,14 +335,31 @@ Tiba. : ${arrDate}
 Jam  : ${arrTime}
 Crew : ${arrCrew}`;
 
+    // Simpan ke Rekap
+    const newRecord = {
+      id: Date.now(),
+      type: 'KEDATANGAN',
+      ship: cleanShip,
+      location: arrOrigin,
+      date: arrDate,
+      time: arrTime,
+      crew: arrCrew,
+      rawMessage: message
+    };
+    
+    shipRecords.unshift(newRecord);
+    saveAndRender();
+
+    // Buka WA
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
   }
 
-  // KIRIM PESAN KEBERANGKATAN ONLY
+  // SIMPAN & KIRIM KEBERANGKATAN
   function sendDepartureWA() {
     const depShip = document.getElementById('depShip').value;
     const depDestination = document.getElementById('depDestination').value;
-    const depDate = formatDepDate(document.getElementById('depDate').value);
+    const rawDate = document.getElementById('depDate').value;
+    const depDate = formatDepDate(rawDate);
     const depTime = document.getElementById('depTime').value;
     const depCrew = document.getElementById('depCrew').value;
 
@@ -263,7 +377,82 @@ BRKT. TGL : ${depDate}
 JAM.      : ${depTime}
 CREW      : ${depCrew}`;
 
+    // Simpan ke Rekap
+    const newRecord = {
+      id: Date.now(),
+      type: 'KEBERANGKATAN',
+      ship: cleanShip,
+      location: depDestination,
+      date: depDate,
+      time: depTime,
+      crew: depCrew,
+      rawMessage: message
+    };
+
+    shipRecords.unshift(newRecord);
+    saveAndRender();
+
+    // Buka WA
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
+  }
+
+  // Fungsi untuk menyimpan ke LocalStorage dan Refresh Tabel
+  function saveAndRender() {
+    localStorage.setItem('shipRecords', JSON.stringify(shipRecords));
+    renderRecapTable();
+  }
+
+  // Tampilkan data ke tabel HTML
+  function renderRecapTable() {
+    const tbody = document.getElementById('recapTableBody');
+    tbody.innerHTML = '';
+
+    if (shipRecords.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#888;">Belum ada data rekap</td></tr>`;
+      return;
+    }
+
+    shipRecords.forEach(rec => {
+      const tr = document.createElement('tr');
+      const badgeClass = rec.type === 'KEDATANGAN' ? 'badge-arr' : 'badge-dep';
+      
+      tr.innerHTML = `
+        <td><span class="${badgeClass}">${rec.type}</span></td>
+        <td>${rec.ship}</td>
+        <td>${rec.location}</td>
+        <td>${rec.date} (${rec.time})</td>
+        <td>${rec.crew}</td>
+        <td>
+          <button class="btn-action btn-send" onclick="resendWA(${rec.id})">WA</button>
+          <button class="btn-action btn-delete" onclick="deleteRecord(${rec.id})">X</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  // Kirim ulang pesan dari rekap
+  function resendWA(id) {
+    const item = shipRecords.find(r => r.id === id);
+    if (item) {
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(item.rawMessage)}`, '_blank');
+    }
+  }
+
+  // Hapus item rekap tunggal
+  function deleteRecord(id) {
+    if (confirm("Hapus catatan ini dari rekap?")) {
+      shipRecords = shipRecords.filter(r => r.id !== id);
+      saveAndRender();
+    }
+  }
+
+  // Hapus semua data rekap
+  function clearAllData() {
+    if (confirm("Apakah kamu yakin ingin menghapus SEMUA data rekap?")) {
+      shipRecords = [];
+      saveAndRender();
+    }
   }
 </script>
 
