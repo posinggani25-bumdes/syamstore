@@ -324,27 +324,37 @@
         // ==========================================
         // FITUR EKSPOR PDF DIPERBAIKI SECARA VISUAL
         // ==========================================
-        // Fungsi untuk membersihkan karakter anomali / non-ASCII sebelum masuk ke jsPDF
+// Fungsi sanitasi teks yang AMAN untuk Bahasa Indonesia
 function cleanPdfText(text) {
     if (!text) return '';
     return text
-        // Menghapus karakter pengganti Unicode/NULL (seperti \uFFFE, \uFFFF, \u0000)
+        // 1. Bersihkan karakter kontrol Unicode tersembunyi (NULL, BOM, dll)
         .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u7F-\u9F\uFFF0-\uFFFF]/g, '')
-        // Mengubah emoji & simbol khusus menjadi teks/karakter biasa yang aman
-        .replace(/[^\x00-\x7F]/g, function(char) {
-            // Pemetaan emoji umum ke teks aman
-            const emojiMap = {
-                '📅': 'Hari/Tgl: ',
-                '⏰': 'Waktu: ',
-                '📍': 'Tempat: ',
-                '📝': 'Nota: ',
-                '•': '-',
-                '’': "'",
-                '“': '"',
-                '”': '"'
+        
+        // 2. Bersihkan sintaks Markdown (**bold**, *italic*, # header, dll)
+        .replace(/\*\*(.*?)\*\*/g, '$1') // hapus **
+        .replace(/\*(.*?)\*/g, '$1')     // hapus *
+        .replace(/`([^`]+)`/g, '$1')      // hapus inline code `
+        .replace(/^#+\s+/gm, '')          // hapus tanda # di awal baris
+        
+        // 3. Konversi emoji & simbol khusus ke teks/simbol standar
+        .replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu, function(char) {
+            const map = {
+                '📅': '[TGL] ',
+                '⏰': '[WAKTU] ',
+                '📍': '[LOKASI] ',
+                '📝': '[CATATAN] ',
+                '📌': '-',
+                '✅': '[V] '
             };
-            return emojiMap[char] || '';
-        });
+            return map[char] || '';
+        })
+        
+        // 4. Ubah quote khusus / dash ke ASCII standar
+        .replace(/[’’]/g, "'")
+        .replace(/[“”]/g, '"')
+        .replace(/[–—]/g, '-')
+        .replace(/•/g, '-');
 }
 
 function generatePDF() {
@@ -360,11 +370,11 @@ function generatePDF() {
     const margin = 20;
     const contentWidth = pageWidth - (margin * 2);
 
-    // Bersihkan judul dan konten dari karakter bermasalah
+    // Proses pembersihan teks yang aman
     const safeTitle = cleanPdfText(note.title);
     const safeContent = cleanPdfText(note.content);
 
-    // 1. Header Banner
+    // 1. Header Banner Gradient
     doc.setFillColor(99, 102, 241);
     doc.rect(0, 0, pageWidth, 35, 'F');
 
@@ -377,7 +387,7 @@ function generatePDF() {
     doc.setFontSize(10);
     doc.text("Syam Digital Notebook", margin, 27);
 
-    // 2. Metadata Box
+    // 2. Box Metadata
     doc.setFillColor(248, 250, 252);
     doc.setDrawColor(226, 232, 240);
     doc.roundedRect(margin, 45, contentWidth, 18, 3, 3, 'FD');
@@ -403,7 +413,7 @@ function generatePDF() {
     doc.line(margin, currentY, pageWidth - margin, currentY);
     currentY += 10;
 
-    // 4. Isi Konten Teks (Sudah Bersih)
+    // 4. Isi Konten Teks
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(51, 65, 85);
