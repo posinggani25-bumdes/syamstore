@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Perusahaan - PT Nusantara Digital</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+
+        /* Header & Navigasi */
+        header {
+            background-color: #0d2c54;
+            color: #fff;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00a8e8;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #00a8e8;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(13, 44, 84, 0.8), rgba(13, 44, 84, 0.8)), url('https://via.placeholder.com/1200x500') no-repeat center center/cover;
+            color: #fff;
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #00a8e8;
+            color: #fff;
+            padding: 10px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        /* Section Umum */
+        section {
+            padding: 60px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: #0d2c54;
+        }
+
+        /* Tentang Kami */
+        .about {
+            background-color: #fff;
+        }
+
+        /* Layanan */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .service-card {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .service-card h3 {
+            margin-bottom: 10px;
+            color: #0d2c54;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0d2c54;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <header>
+        <div class="logo">PT Nusantara Digital</div>
+        <nav>
+            <a href="#beranda">Beranda</a>
+            <a href="#tentang">Tentang Kami</a>
+            <a href="#layanan">Layanan</a>
+            <a href="#kontak">Kontak</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="beranda">
+        <h1>Solusi Digital Terdepan untuk Bisnis Anda</h1>
+        <p>Kami membantu perusahaan bertransformasi dan berkembang pesat di era digital melalui inovasi teknologi terbaik.</p>
+        <a href="#layanan" class="btn">Jelajahi Layanan</a>
+    </section>
+
+    <!-- Tentang Kami Section -->
+    <section class="about" id="tentang">
+        <h2 class="section-title">Tentang Perusahaan</h2>
+        <p style="text-align: center; max-width: 800px; margin: 0 auto;">
+            PT Nusantara Digital berdiri sejak tahun 2020 dan telah membantu puluhan instansi serta bisnis modern melangkah ke ranah digital. Dengan tim ahli berpengalaman, kami berkomitmen memberikan layanan teknologi berstandar tinggi yang efisien dan tepat sasaran.
+        </p>
+    </section>
+
+    <!-- Layanan Section -->
+    <section id="layanan">
+        <h2 class="section-title">Layanan Utama Kami</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Pengembangan Software</h3>
+                <p>Pembuatan aplikasi web dan mobile sesuai kebutuhan spesifik bisnis Anda.</p>
+            </div>
+            <div class="service-card">
+                <h3>Konsultan TI</h3>
+                <p>Pendampingan ahli dalam perancangan strategi dan infrastruktur teknologi informasi.</p>
+            </div>
+            <div class="service-card">
+                <h3>Digital Marketing</h3>
+                <p>Strategi optimasi bisnis online untuk menjangkau target audiens lebih luas.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="kontak">
+        <p>&copy; 2026 PT Nusantara Digital. Hak Cipta Dilindungi Undang-Undang.</p>
+    </footer>
+
+</body>
+</html>
