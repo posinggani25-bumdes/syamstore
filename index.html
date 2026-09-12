@@ -333,7 +333,7 @@
 
         /* GitHub Steps */
         .steps-container {
-            background: white;
+            background: black;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
@@ -495,7 +495,109 @@
       margin-bottom: 1.5rem;
       color: #94a3b8;
     }
+/* Reset & Base Styling untuk Contoh Halaman */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
+    body {
+      background-color: #0f172a;
+      color: #f8fafc;
+      padding: 2rem;
+      line-height: 1.6;
+    }
+
+    .dummy-content {
+      max-width: 800px;
+      margin: 0 auto;
+      height: 2500px; /* Dibuat tinggi agar bisa di-scroll */
+    }
+
+    .dummy-content h1 {
+      margin-bottom: 1rem;
+      color: #38bdf8;
+    }
+
+    .dummy-content p {
+      margin-bottom: 1.5rem;
+      color: #94a3b8;
+    }
+
+    /* ==========================================
+       STYLING TOMBOL BACK TO TOP
+    ========================================== */
+    #backToTopBtn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      border: none;
+      border-radius: 50%;
+      /* Background Gradient Modern */
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      color: #ffffff;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.5);
+      z-index: 1000;
+      
+      /* Animasi Transisi Muncul/Sembunyi */
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px) scale(0.8);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* Ukuran Icon Panah (SVG) */
+    #backToTopBtn svg {
+      width: 24px;
+      height: 24px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.3s ease;
+    }
+
+    /* Class Aktif saat Tombol Muncul */
+    #backToTopBtn.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Efek Hover (Saat Kursor Diarahkan ke Tombol) */
+    #backToTopBtn:hover {
+      background: linear-gradient(135deg, #4f46e5, #9333ea);
+      box-shadow: 0 15px 30px rgba(168, 85, 247, 0.6);
+      transform: translateY(-5px) scale(1.05);
+    }
+
+    #backToTopBtn:hover svg {
+      transform: translateY(-3px); /* Panah bergerak sedikit ke atas */
+    }
+
+    /* Efek Klik */
+    #backToTopBtn:active {
+      transform: translateY(-2px) scale(0.95);
+    }
+
+    /* Responsive untuk Layar HP */
+    @media (max-width: 768px) {
+      #backToTopBtn {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+      }
+    }
     </style>
 </head>
 <body>
