@@ -250,6 +250,75 @@
             font-size: 24px;
             cursor: pointer;
         }
+/* ==========================================
+   STYLING TOMBOL BACK TO TOP
+========================================== */
+#backToTopBtn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.5);
+  z-index: 1000;
+  
+  /* Animasi Transisi */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.8);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#backToTopBtn svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.3s ease;
+}
+
+/* Class saat tombol muncul */
+#backToTopBtn.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+/* Efek Hover */
+#backToTopBtn:hover {
+  background: linear-gradient(135deg, #4f46e5, #9333ea);
+  box-shadow: 0 15px 30px rgba(168, 85, 247, 0.6);
+  transform: translateY(-5px) scale(1.05);
+}
+
+#backToTopBtn:hover svg {
+  transform: translateY(-3px);
+}
+
+#backToTopBtn:active {
+  transform: translateY(-2px) scale(0.95);
+}
+
+/* Responsive di HP */
+@media (max-width: 768px) {
+  #backToTopBtn {
+    bottom: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+  }
+}
 
          /* === HERO SECTION === */
         .hero {
@@ -827,5 +896,31 @@
   // Jalankan Otomatis saat dimuat
   startTimer();
 </script>
+<script>
+const backToTopBtn = document.getElementById("backToTopBtn");
+
+// Tampilkan tombol saat di-scroll ke bawah 300px
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 300) {
+    backToTopBtn.classList.add("show");
+  } else {
+    backToTopBtn.classList.remove("show");
+  }
+});
+
+// Scroll halus ke atas saat tombol diklik
+backToTopBtn.addEventListener("click", () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+});
+</script>
+<!-- Tombol Back to Top -->
+<button id="backToTopBtn" aria-label="Kembali ke atas">
+  <svg viewBox="0 0 24 24">
+    <path d="M18 15l-6-6-6 6"/>
+  </svg>
+</button>
 </body>
 </html>
