@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Syam Digital - Jasa Pembuatan Website & Deploy GitHub</title>
+    
+    <!-- FAVICON -->
     <link rel="icon" type="image/png" href="https://res.cloudinary.com/di8stbg60/image/upload/v1767425380/syam-digital-01_i5zfka.png">
+
     <!-- FontAwesome untuk Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -51,10 +54,20 @@
             height: 70px;
         }
 
+        /* Styling Logo Gambar & Teks */
         .logo {
-            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
             font-weight: bold;
             color: #2c3e50;
+        }
+
+        .logo img {
+            height: 45px; /* Sesuaikan tinggi logo sesuai kebutuhan */
+            width: auto;
+            object-fit: contain;
         }
 
         .logo span {
@@ -493,7 +506,11 @@
     <!-- === HEADER / NAVBAR === -->
     <header>
         <div class="navbar-container">
-            <a href="#" class="logo">SYAM <span>DIGITAL</span></a>
+            <!-- LOGO GAMBAR DAN TEKS -->
+            <a href="#" class="logo">
+                <img src="https://res.cloudinary.com/di8stbg60/image/upload/v1767425380/syam-digital-01_i5zfka.png" alt="Syam Digital Logo">
+                SYAM <span>DIGITAL</span>
+            </a>
 
             <ul class="nav-menu" id="navMenu">
                 <li class="nav-item">
@@ -723,7 +740,7 @@
             <a href="https://wa.me/6285150531572" target="_blank" class="hero-btn" style="background: white; color: #128c7e;">
                 <i class="fab fa-whatsapp"></i> +62 851-5053-1572
             </a>
-        </div>
+        </section>
     </div>
 
     <!-- === FOOTER === -->
