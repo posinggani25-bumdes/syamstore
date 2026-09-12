@@ -689,13 +689,37 @@
             </div>
         </div>
     </header>
-     <!-- Slider Foto -->
+    <!-- Slider Foto -->
 <section id="slider" class="relative bg-slate-900/50 border-b border-white/10 overflow-hidden group">
   <!-- Container Gambar -->
-  <div class="relative w-full h-[28vh] sm:h-[38vh] md:h-[48vh] lg:h-[56vh]">
+  <div class="relative w-full h-[40vh] sm:h-[55vh] md:h-[70vh] lg:h-[80vh]">
+    <img data-slide="0" 
+         src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEho5RWAsQtpAFmdlDuL-ruNjNGZwiNNaZC16IATR0CTw0425evm_Szt1t87TKthBoLO_lsxBqgGbEBWMBxQ2DTzP50OxWfyh_eLEQaVtFrnt-cIJhZVY-zZqUUxQi6vFFJjX5kEPXr8aKtwZ8IzMRJ7tkvLEvfDQbIHF1-YFOXvpuN4x7IuJrxi3gaSGriJ/s1671/ChatGPT%20Image%2012%20Sep%202026,%2022.42.37.png" 
+         alt="Slide 1" 
+         class="slide-item absolute inset-0 w-full h-full object-cover object-center opacity-100 transition-opacity duration-700 ease-in-out" 
+         onerror="this.onerror=null; this.src='https://placehold.co/1600x600/1e293b/ffffff?text=Gambar+Gagal+Dimuat';">
+
+    <img data-slide="1" 
+         src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEifib1_BhbUmbwNy8bmeksfVwv__zZcvwqSqPqenZsBHINIc73U6eWlBD1oZQklLC_rdfnSplnl7UzFyLHqKqhHpkzKqI1tcoCWpqmXR9Do0buCmF0zxQGNHU-YthE8ZHwaD4QA1jaiSxGmu96dbPqkBHpPX8NO287gPDCPOcRPSBpdPojMCfebD7NV9Sf_/s1661/ChatGPT%20Image%2012%20Sep%202026,%2022.45.36.png" 
+         alt="Slide 2" 
+         class="slide-item absolute inset-0 w-full h-full object-cover object-center opacity-0 transition-opacity duration-700 ease-in-out" 
+         onerror="this.onerror=null; this.src='https://placehold.co/1600x600/1e293b/ffffff?text=Gambar+Gagal+Dimuat';">
+
     <img data-slide="2" 
-         src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi4UIB3z7tmB7hRsW1SM0xIUqjuhkh2JrT2OD2aMZEQJKk1_2lamXB73IZqeo8n_n84hew05y2nbIKNOyydUzzcVtijmkMbh9tBTFC8xt9RuwW_j1DXZzJz10epORm3zSz-AqJEyFbVzHlSxLuc9rlnZ3OIncSJOIlI8JSGA_HIGhYFJ3_urlTks-NzV1Q6/s4342/Syamdigital-solusi-Cerdas.png" 
+         src="https://agas88.web.id/agas2.png" 
          alt="Slide 3" 
+         class="slide-item absolute inset-0 w-full h-full object-cover object-center opacity-0 transition-opacity duration-700 ease-in-out" 
+         onerror="this.onerror=null; this.src='https://placehold.co/1600x600/1e293b/ffffff?text=Gambar+Gagal+Dimuat';">
+
+    <img data-slide="3" 
+         src="https://fastly.picsum.photos/id/116/1600/600.jpg?hmac=UypL33kA6WWOPpJDClicc4FJonH70WE4x2Xf0oeZkDA" 
+         alt="Slide 4" 
+         class="slide-item absolute inset-0 w-full h-full object-cover object-center opacity-0 transition-opacity duration-700 ease-in-out" 
+         onerror="this.onerror=null; this.src='https://placehold.co/1600x600/1e293b/ffffff?text=Gambar+Gagal+Dimuat';">
+
+    <img data-slide="4" 
+         src="https://fastly.picsum.photos/id/744/1600/600.jpg?hmac=6IbVyFGZkvmaEOZfF8ZInQe5Gpy9ShN44G36_NEZwMk" 
+         alt="Slide 5" 
          class="slide-item absolute inset-0 w-full h-full object-cover object-center opacity-0 transition-opacity duration-700 ease-in-out" 
          onerror="this.onerror=null; this.src='https://placehold.co/1600x600/1e293b/ffffff?text=Gambar+Gagal+Dimuat';">
   </div>
@@ -717,6 +741,70 @@
     <button class="dot w-3 h-3 rounded-full bg-white opacity-50 hover:opacity-80 transition-all duration-300" onclick="goToSlide(4)"></button>
   </div>
 </section>
+
+<!-- Script Interaktif untuk Jalannya Slider -->
+<script>
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide-item');
+  const dots = document.querySelectorAll('.dot');
+  const totalSlides = slides.length;
+  let slideInterval;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      if (i === index) {
+        slide.classList.remove('opacity-0');
+        slide.classList.add('opacity-100');
+      } else {
+        slide.classList.remove('opacity-100');
+        slide.classList.add('opacity-0');
+      }
+    });
+
+    dots.forEach((dot, i) => {
+      if (i === index) {
+        dot.classList.remove('opacity-50');
+        dot.classList.add('opacity-100', 'w-6'); // Efek memanjang pada indikator aktif
+      } else {
+        dot.classList.remove('opacity-100', 'w-6');
+        dot.classList.add('opacity-50', 'w-3');
+      }
+    });
+
+    currentSlide = index;
+  }
+
+  function nextSlide() {
+    let next = (currentSlide + 1) % totalSlides;
+    showSlide(next);
+  }
+
+  function prevSlide() {
+    let prev = (currentSlide - 1 + totalSlides) % totalSlides;
+    showSlide(prev);
+  }
+
+  function goToSlide(index) {
+    showSlide(index);
+    resetTimer();
+  }
+
+  function startTimer() {
+    slideInterval = setInterval(nextSlide, 4000); // Berganti otomatis setiap 4 detik
+  }
+
+  function resetTimer() {
+    clearInterval(slideInterval);
+    startTimer();
+  }
+
+  // Event Listener untuk Tombol
+  document.getElementById('nextBtn').addEventListener('click', () => { nextSlide(); resetTimer(); });
+  document.getElementById('prevBtn').addEventListener('click', () => { prevSlide(); resetTimer(); });
+
+  // Jalankan Otomatis saat dimuat
+  startTimer();
+</script>
 
 
     <!-- === HERO SECTION === -->
