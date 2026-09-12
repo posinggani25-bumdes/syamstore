@@ -251,7 +251,28 @@
             cursor: pointer;
         }
 
-       
+         /* === HERO SECTION === */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://picsum.photos/1600/600') no-repeat center center/cover;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 600px;
+        }
 
         /* === CONTENT SECTION === */
         .content {
@@ -592,69 +613,7 @@
   </div>
 </section>
 
-<!-- Script Interaktif untuk Jalannya Slider -->
-<script>
-  let currentSlide = 0;
-  const slides = document.querySelectorAll('.slide-item');
-  const dots = document.querySelectorAll('.dot');
-  const totalSlides = slides.length;
-  let slideInterval;
 
-  function showSlide(index) {
-    slides.forEach((slide, i) => {
-      if (i === index) {
-        slide.classList.remove('opacity-0');
-        slide.classList.add('opacity-100');
-      } else {
-        slide.classList.remove('opacity-100');
-        slide.classList.add('opacity-0');
-      }
-    });
-
-    dots.forEach((dot, i) => {
-      if (i === index) {
-        dot.classList.remove('opacity-50');
-        dot.classList.add('opacity-100', 'w-6'); // Efek memanjang pada indikator aktif
-      } else {
-        dot.classList.remove('opacity-100', 'w-6');
-        dot.classList.add('opacity-50', 'w-3');
-      }
-    });
-
-    currentSlide = index;
-  }
-
-  function nextSlide() {
-    let next = (currentSlide + 1) % totalSlides;
-    showSlide(next);
-  }
-
-  function prevSlide() {
-    let prev = (currentSlide - 1 + totalSlides) % totalSlides;
-    showSlide(prev);
-  }
-
-  function goToSlide(index) {
-    showSlide(index);
-    resetTimer();
-  }
-
-  function startTimer() {
-    slideInterval = setInterval(nextSlide, 4000); // Berganti otomatis setiap 4 detik
-  }
-
-  function resetTimer() {
-    clearInterval(slideInterval);
-    startTimer();
-  }
-
-  // Event Listener untuk Tombol
-  document.getElementById('nextBtn').addEventListener('click', () => { nextSlide(); resetTimer(); });
-  document.getElementById('prevBtn').addEventListener('click', () => { prevSlide(); resetTimer(); });
-
-  // Jalankan Otomatis saat dimuat
-  startTimer();
-</script>
     <!-- === HERO SECTION === -->
     <section class="hero" id="beranda">
         <h1>🌐 SYAM DIGITAL</h1>
@@ -834,5 +793,68 @@
             }
         });
     </script>
+<!-- Script Interaktif untuk Jalannya Slider -->
+<script>
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide-item');
+  const dots = document.querySelectorAll('.dot');
+  const totalSlides = slides.length;
+  let slideInterval;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      if (i === index) {
+        slide.classList.remove('opacity-0');
+        slide.classList.add('opacity-100');
+      } else {
+        slide.classList.remove('opacity-100');
+        slide.classList.add('opacity-0');
+      }
+    });
+
+    dots.forEach((dot, i) => {
+      if (i === index) {
+        dot.classList.remove('opacity-50');
+        dot.classList.add('opacity-100', 'w-6'); // Efek memanjang pada indikator aktif
+      } else {
+        dot.classList.remove('opacity-100', 'w-6');
+        dot.classList.add('opacity-50', 'w-3');
+      }
+    });
+
+    currentSlide = index;
+  }
+
+  function nextSlide() {
+    let next = (currentSlide + 1) % totalSlides;
+    showSlide(next);
+  }
+
+  function prevSlide() {
+    let prev = (currentSlide - 1 + totalSlides) % totalSlides;
+    showSlide(prev);
+  }
+
+  function goToSlide(index) {
+    showSlide(index);
+    resetTimer();
+  }
+
+  function startTimer() {
+    slideInterval = setInterval(nextSlide, 4000); // Berganti otomatis setiap 4 detik
+  }
+
+  function resetTimer() {
+    clearInterval(slideInterval);
+    startTimer();
+  }
+
+  // Event Listener untuk Tombol
+  document.getElementById('nextBtn').addEventListener('click', () => { nextSlide(); resetTimer(); });
+  document.getElementById('prevBtn').addEventListener('click', () => { prevSlide(); resetTimer(); });
+
+  // Jalankan Otomatis saat dimuat
+  startTimer();
+</script>
 </body>
 </html>
