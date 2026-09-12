@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Player Custom Style</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
@@ -23,6 +24,76 @@ http://www.templatemo.com/tm-517-timeless
     <!-- Templatemo style -->
 </head>
 <style>
+<style>
+    /* Reset & Container Utama */
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 800px; /* Atur lebar maksimal sesuai kebutuhan */
+      margin: 0 auto;
+      background-color: #000;
+      overflow: hidden;
+    }
+
+    /* Modifikasi tag separator bawaan Blogger */
+    .separator {
+      clear: both;
+      text-align: center;
+      position: relative;
+      width: 100%;
+    }
+
+    /* Style untuk objek video agar responsif & hitam-putih */
+    .BLOG_video_class, 
+    .separator iframe, 
+    .separator video {
+      width: 100% !important;
+      height: 450px !important; /* Adjust tinggi sesuai keinginan */
+      display: block;
+      border: none;
+      /* Efek Hitam Putih seperti di foto */
+      filter: grayscale(100%) contrast(115%);
+      object-fit: cover;
+    }
+
+    /* Ikon Spinner/Loading di Tengah Video */
+    .video-overlay-loader {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(255, 255, 255, 0.2);
+      border-top: 4px solid #ffffff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      pointer-events: none; /* Klik tetap tembus ke video */
+      z-index: 10;
+    }
+
+    /* Animasi putar ikon loading */
+    @keyframes spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* Progress Bar kustom di bagian bawah */
+    .custom-progress-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background-color: rgba(255, 255, 255, 0.3);
+      z-index: 10;
+    }
+
+    .custom-progress-fill {
+      width: 30%; /* Nilai persentase durasi/progress */
+      height: 100%;
+      background-color: #ffffff;
+    }
 /*
 
 Timeless Template 
@@ -503,15 +574,23 @@ a, button, .form-control, .tm-timeline-description {
                 </header>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="tm-video-container">
-                    <video id="BLOG_video-77726cb1e8d8ed95" class="tm-welcome-video" autoplay="" loop="" muted="">
-                        <source src="videos/video.mp4" type="video/mp4"> Your browser does not support the video tag.
-                        </video>
-                        <div id="tm-video-loader"></div>
-                        <div id="tm-video-text-overlay" class="tm-video-text-overlay d-none">
-                            <h1>
+        <!-- Wrapper Video -->
+  <div class="video-wrapper">
+    
+    <!-- Tag Video Asli Kamu -->
+    <div class="separator" style="clear: both; text-align: center;">
+      <object class="BLOG_video_class" contentid="77726cb1e8d8ed95" width="400" height="322" id="BLOG_video-77726cb1e8d8ed95" aria-label="Upload video"></object>
+    </div>
+
+    <!-- Ikon Loading Tengah -->
+    <div class="video-overlay-loader"></div>
+
+    <!-- Progress Bar Bawah -->
+    <div class="custom-progress-bar">
+      <div class="custom-progress-fill"></div>
+    </div>
+
+  </div>
                                 <div id="rotate" class="tm-video-text">
                                     <div>This is timeless</div>
                                     <div>We are invincible</div>
